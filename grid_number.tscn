@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://drkp5hjvd4sff"]
+
+[ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://pico-8.ttf" id="1_814bl"]
+
+[node name="GridNumber" type="RichTextLabel" unique_id=79238246]
+offset_right = 3.0
+offset_bottom = 5.0
+theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
+theme_override_fonts/normal_font = ExtResource("1_814bl")
+theme_override_font_sizes/normal_font_size = 5
+text = "0"
+scroll_active = false
