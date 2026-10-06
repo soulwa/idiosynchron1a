@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://bu4e4tevp5ddq"]
 
 [ext_resource type="Texture2D" uid="uid://c2awv65o1psti" path="res://player.png" id="1_f3sb7"]
-[ext_resource type="Texture2D" uid="uid://bpjxfwtkf4a0y" path="res://enemies.png" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://bnwijij557iyv" path="res://run.gd" id="1_gbfbk"]
 [ext_resource type="Script" uid="uid://ds2tdn857ed2w" path="res://grid.gd" id="3_dwbse"]
 [ext_resource type="Theme" uid="uid://cby6dkwpffv60" path="res://eng_font.tres" id="3_tlwt5"]
 [ext_resource type="Script" uid="uid://5rxr22re30k8" path="res://color_text.gd" id="4_aqk2v"]
 [ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://pico-8.ttf" id="5_036b0"]
+[ext_resource type="Script" uid="uid://bpujqwvsvg7xy" path="res://player.gd" id="5_gbfbk"]
 [ext_resource type="Texture2D" uid="uid://c6md4j46jlpyl" path="res://tiles.png" id="7_pkg7o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwbse"]
@@ -21,10 +22,7 @@ atlas = ExtResource("7_pkg7o")
 region = Rect2(14, 0, 7, 7)
 
 [node name="World" type="Node2D" unique_id=464993906]
-
-[node name="Enemies" type="Sprite2D" parent="." unique_id=1915942936]
-position = Vector2(42, -28)
-texture = ExtResource("2_fj7yv")
+script = ExtResource("1_gbfbk")
 
 [node name="Grid" type="Node2D" parent="." unique_id=1679135076]
 position = Vector2(7, 7)
@@ -46,9 +44,16 @@ position = Vector2(7, 7)
 
 [node name="Tiles" type="Node2D" parent="Grid" unique_id=651985002]
 
-[node name="Player" type="Sprite2D" parent="." unique_id=1788287470]
-position = Vector2(24.5, 24.5)
+[node name="Entities" type="Node2D" parent="Grid" unique_id=1097060288]
+
+[node name="Player" type="Node2D" parent="Grid/Entities" unique_id=24108697]
+position = Vector2(17.5, 17.5)
+script = ExtResource("5_gbfbk")
+
+[node name="Sprite2D" type="Sprite2D" parent="Grid/Entities/Player" unique_id=1412249075]
 texture = ExtResource("1_f3sb7")
+
+[node name="Enemies" type="Node2D" parent="Grid/Entities" unique_id=1778765995]
 
 [node name="UI" type="Control" parent="." unique_id=431750437]
 layout_mode = 3
@@ -238,9 +243,9 @@ offset_bottom = 70.0
 clip_contents = false
 layout_mode = 0
 offset_left = -4.0
-offset_top = 6.0
+offset_top = 4.0
 offset_right = 31.0
-offset_bottom = 16.0
+offset_bottom = 14.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -263,9 +268,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = -4.0
-offset_top = 13.0
+offset_top = 11.0
 offset_right = 31.0
-offset_bottom = 23.0
+offset_bottom = 21.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -288,9 +293,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = -4.0
-offset_top = 20.0
+offset_top = 18.0
 offset_right = 31.0
-offset_bottom = 30.0
+offset_bottom = 28.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -313,9 +318,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = -4.0
-offset_top = 27.0
+offset_top = 25.0
 offset_right = 31.0
-offset_bottom = 37.0
+offset_bottom = 35.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -338,9 +343,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
-offset_top = 6.0
+offset_top = 4.0
 offset_right = 51.0
-offset_bottom = 16.0
+offset_bottom = 14.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -363,9 +368,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
-offset_top = 13.0
+offset_top = 11.0
 offset_right = 51.0
-offset_bottom = 23.0
+offset_bottom = 21.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -388,9 +393,9 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
-offset_top = 20.0
+offset_top = 18.0
 offset_right = 51.0
-offset_bottom = 30.0
+offset_bottom = 28.0
 theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("5_036b0")
 theme_override_font_sizes/normal_font_size = 5
@@ -408,3 +413,23 @@ theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 
 text = "???"
 fit_content = true
 scroll_active = false
+
+[node name="GameOver" type="Control" parent="UI" unique_id=643699453]
+visible = false
+anchors_preset = 0
+offset_right = 71.0
+offset_bottom = 70.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/GameOver" unique_id=1680703223]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 65.0
+offset_bottom = 62.0
+theme = ExtResource("3_tlwt5")
+text = "game over
+
+press enter to try again"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

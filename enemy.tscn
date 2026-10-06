@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://k4ph45ym05k0"]
+
+[ext_resource type="Script" uid="uid://dx0luk4bvl8cc" path="res://enemy.gd" id="1_4gyqm"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7k104"]
+load_path = "res://.godot/imported/enemies.png-54f6dd22fa36905f43103a80b3460952.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gyqm"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_7k104")
+region = Rect2(0, 0, 7, 7)
+
+[node name="Enemy" type="Node2D" unique_id=2113914791]
+script = ExtResource("1_4gyqm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=306780943]
+texture = SubResource("AtlasTexture_4gyqm")

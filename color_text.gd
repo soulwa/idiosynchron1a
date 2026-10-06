@@ -6,7 +6,7 @@ enum TypeOfText {
 }
 @export var type_of_text: TypeOfText
 
-func update_text(new_text: String) -> void:
+func update_text(new_text: Variant) -> void:
 	# TODO: add color to text based on what type it is, here.
-	text = new_text
+	text = str(new_text)
 	
