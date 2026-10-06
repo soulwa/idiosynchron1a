@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drkp5hjvd4sff"]
 
-[ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://pico-8.ttf" id="1_814bl"]
+[ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://assets/fonts/pico-8.ttf" id="1_814bl"]
 
 [node name="GridNumber" type="RichTextLabel" unique_id=79238246]
 offset_right = 3.0

@@ -1,0 +1,406 @@
+[gd_scene format=3 uid="uid://bu4e4tevp5ddq"]
+
+[ext_resource type="Script" uid="uid://bnwijij557iyv" path="res://scripts/run.gd" id="1_7r4gi"]
+[ext_resource type="Script" uid="uid://ds2tdn857ed2w" path="res://scripts/grid.gd" id="2_w7kh3"]
+[ext_resource type="Texture2D" uid="uid://c6md4j46jlpyl" path="res://assets/textures/tiles.png" id="3_e3hyu"]
+[ext_resource type="Script" uid="uid://bpujqwvsvg7xy" path="res://scripts/player.gd" id="4_q5onr"]
+[ext_resource type="Texture2D" uid="uid://c2awv65o1psti" path="res://assets/textures/player.png" id="5_jhx03"]
+[ext_resource type="PackedScene" uid="uid://dpdw85h36mo24" path="res://scenes/spell_ui.tscn" id="6_o8fc1"]
+[ext_resource type="Theme" uid="uid://cby6dkwpffv60" path="res://resources/eng_font.tres" id="7_xo05s"]
+[ext_resource type="Script" uid="uid://5rxr22re30k8" path="res://scripts/color_text.gd" id="8_dss4m"]
+[ext_resource type="Script" uid="uid://dw7f0teaesrfn" path="res://scripts/spell_help.gd" id="9_7t5mc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwbse"]
+atlas = ExtResource("3_e3hyu")
+region = Rect2(0, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkg7o"]
+atlas = ExtResource("3_e3hyu")
+region = Rect2(7, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbfbk"]
+atlas = ExtResource("3_e3hyu")
+region = Rect2(14, 0, 7, 7)
+
+[node name="World" type="Node2D" unique_id=464993906]
+script = ExtResource("1_7r4gi")
+
+[node name="Grid" type="Node2D" parent="." unique_id=1679135076]
+position = Vector2(7, 7)
+script = ExtResource("2_w7kh3")
+zero_texture = SubResource("AtlasTexture_dwbse")
+odd_texture = SubResource("AtlasTexture_pkg7o")
+even_texture = SubResource("AtlasTexture_gbfbk")
+
+[node name="TopLeftRowNums" type="Marker2D" parent="Grid" unique_id=1514920507]
+position = Vector2(9, 1)
+
+[node name="TopLeftColNums" type="Marker2D" parent="Grid" unique_id=1422097353]
+position = Vector2(2, 8)
+
+[node name="TopLeftTiles" type="Marker2D" parent="Grid" unique_id=265669356]
+position = Vector2(7, 7)
+
+[node name="GridNumbers" type="Node2D" parent="Grid" unique_id=2109195959]
+
+[node name="Tiles" type="Node2D" parent="Grid" unique_id=651985002]
+
+[node name="Entities" type="Node2D" parent="Grid" unique_id=1097060288]
+
+[node name="Spells" type="Node2D" parent="Grid/Entities" unique_id=109140890]
+
+[node name="Player" type="Node2D" parent="Grid/Entities" unique_id=24108697]
+position = Vector2(17.5, 17.5)
+script = ExtResource("4_q5onr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Grid/Entities/Player" unique_id=1412249075]
+texture = ExtResource("5_jhx03")
+
+[node name="Enemies" type="Node2D" parent="Grid/Entities" unique_id=1778765995]
+
+[node name="Spells" type="Node2D" parent="." unique_id=480870143]
+
+[node name="UI" type="Control" parent="." unique_id=431750437]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 112.0
+offset_bottom = 70.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundColor" type="ColorRect" parent="UI" unique_id=1638547086]
+z_index = -10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Stats" type="Control" parent="UI" unique_id=2113031403]
+anchors_preset = 0
+offset_left = 70.0
+offset_top = 1.0
+offset_right = 112.0
+offset_bottom = 71.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Spells" type="Control" parent="UI/Stats" unique_id=1229451003]
+anchors_preset = 0
+
+[node name="Spell0" parent="UI/Stats/Spells" unique_id=1117293171 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_top = 31.0
+offset_right = 18.0
+offset_bottom = 37.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Spell1" parent="UI/Stats/Spells" unique_id=2142383480 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_top = 39.0
+offset_right = 18.0
+offset_bottom = 45.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 1
+
+[node name="Spell2" parent="UI/Stats/Spells" unique_id=1742101733 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_top = 47.0
+offset_right = 18.0
+offset_bottom = 53.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 2
+
+[node name="Spell3" parent="UI/Stats/Spells" unique_id=2146318823 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_top = 55.0
+offset_right = 18.0
+offset_bottom = 61.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 3
+
+[node name="Spell4" parent="UI/Stats/Spells" unique_id=18370599 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 31.0
+offset_right = 37.0
+offset_bottom = 37.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 4
+
+[node name="Spell5" parent="UI/Stats/Spells" unique_id=130279917 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 39.0
+offset_right = 37.0
+offset_bottom = 45.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 5
+
+[node name="Spell6" parent="UI/Stats/Spells" unique_id=1538327837 instance=ExtResource("6_o8fc1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 47.0
+offset_right = 37.0
+offset_bottom = 53.0
+grow_horizontal = 1
+grow_vertical = 1
+number = 6
+
+[node name="Modulus" type="RichTextLabel" parent="UI/Stats" unique_id=537860713]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.014285714
+anchor_bottom = -0.014285714
+offset_left = 21.0
+offset_top = -4.0
+offset_right = 40.0
+offset_bottom = 9.0
+theme = ExtResource("7_xo05s")
+text = "MOD"
+fit_content = true
+scroll_active = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="RichTextLabel" parent="UI/Stats/Modulus" unique_id=1131061866]
+layout_mode = 0
+offset_left = 14.0
+offset_right = 21.0
+offset_bottom = 13.0
+theme = ExtResource("7_xo05s")
+text = "7"
+fit_content = true
+scroll_active = false
+script = ExtResource("8_dss4m")
+
+[node name="Floor" type="RichTextLabel" parent="UI/Stats" unique_id=2030089895]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 2.0
+offset_right = 50.0
+offset_bottom = 15.0
+theme = ExtResource("7_xo05s")
+text = "floor"
+fit_content = true
+scroll_active = false
+
+[node name="Value" type="RichTextLabel" parent="UI/Stats/Floor" unique_id=1077550759]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -6.5
+offset_right = 27.0
+offset_bottom = 6.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xo05s")
+text = "1"
+fit_content = true
+scroll_active = false
+script = ExtResource("8_dss4m")
+
+[node name="Health" type="RichTextLabel" parent="UI/Stats" unique_id=2101951142]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.08571429
+anchor_bottom = 0.08571429
+offset_left = 23.0
+offset_top = 3.0
+offset_right = 65.0
+offset_bottom = 16.0
+theme = ExtResource("7_xo05s")
+text = "hp"
+fit_content = true
+scroll_active = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="RichTextLabel" parent="UI/Stats/Health" unique_id=587683742]
+layout_mode = 0
+offset_left = 12.0
+offset_right = 19.0
+offset_bottom = 13.0
+theme = ExtResource("7_xo05s")
+text = "6"
+fit_content = true
+scroll_active = false
+script = ExtResource("8_dss4m")
+
+[node name="Moves" type="RichTextLabel" parent="UI/Stats" unique_id=322111688]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.08571429
+anchor_bottom = 0.08571429
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 47.0
+offset_bottom = 24.0
+theme = ExtResource("7_xo05s")
+text = "moves"
+fit_content = true
+scroll_active = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="RichTextLabel" parent="UI/Stats/Moves" unique_id=1563718190]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -6.5
+offset_right = 30.0
+offset_bottom = 6.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xo05s")
+text = "1"
+fit_content = true
+scroll_active = false
+script = ExtResource("8_dss4m")
+
+[node name="Score" type="RichTextLabel" parent="UI/Stats" unique_id=172807624]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.14285715
+anchor_top = 0.6571429
+anchor_bottom = 0.6571429
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 47.0
+offset_bottom = 24.0
+theme = ExtResource("7_xo05s")
+text = "score"
+fit_content = true
+scroll_active = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="RichTextLabel" parent="UI/Stats/Score" unique_id=232739919]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -6.5
+offset_right = 17.0
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xo05s")
+text = "0"
+scroll_active = false
+horizontal_alignment = 2
+script = ExtResource("8_dss4m")
+
+[node name="GameOver" type="Control" parent="UI" unique_id=643699453]
+visible = false
+anchors_preset = 0
+offset_right = 71.0
+offset_bottom = 70.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/GameOver" unique_id=1680703223]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 65.0
+offset_bottom = 62.0
+theme = ExtResource("7_xo05s")
+text = "game over
+
+press enter to try again"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpellHelp" type="Control" parent="UI" unique_id=934367086]
+visible = false
+anchors_preset = 0
+offset_right = 70.0
+offset_bottom = 49.0
+script = ExtResource("9_7t5mc")
+
+[node name="ColorRect" type="ColorRect" parent="UI/SpellHelp" unique_id=1024081055]
+layout_mode = 0
+offset_right = 66.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="SpellName" type="RichTextLabel" parent="UI/SpellHelp" unique_id=1779930967]
+layout_mode = 1
+offset_left = 1.0
+offset_top = -4.0
+offset_right = 44.0
+offset_bottom = 7.0
+theme = ExtResource("7_xo05s")
+text = "inc"
+scroll_active = false
+
+[node name="SpellHint" type="RichTextLabel" parent="UI/SpellHelp" unique_id=494788492]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -19.5
+offset_right = 1.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_xo05s")
+theme_override_constants/line_separation = -3
+theme_override_font_sizes/normal_font_size = 16
+text = "+1 immediate to [enemy]"
+scroll_active = false

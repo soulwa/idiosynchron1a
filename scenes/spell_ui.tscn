@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dpdw85h36mo24"]
+
+[ext_resource type="Script" uid="uid://d1ut62vyl7f47" path="res://scripts/spell_ui.gd" id="1_48tn3"]
+[ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://assets/fonts/pico-8.ttf" id="2_lbsfj"]
+[ext_resource type="Theme" uid="uid://cby6dkwpffv60" path="res://resources/eng_font.tres" id="3_r0wwg"]
+
+[node name="Spell0" type="Control" unique_id=1117293171]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.5
+offset_top = -3.0
+offset_right = 8.5
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_48tn3")
+
+[node name="SpellNum" type="RichTextLabel" parent="." unique_id=181276464]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -5.0
+offset_right = 3.0
+grow_vertical = 0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
+theme_override_fonts/normal_font = ExtResource("2_lbsfj")
+theme_override_font_sizes/normal_font_size = 5
+text = "0"
+scroll_active = false
+vertical_alignment = 2
+
+[node name="SpellName" type="RichTextLabel" parent="." unique_id=561160937]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -11.0
+offset_bottom = 2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+theme = ExtResource("3_r0wwg")
+bbcode_enabled = true
+text = "[color=#7a7a7a]???[/color]"
+fit_content = true
+scroll_active = false

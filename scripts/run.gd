@@ -8,7 +8,7 @@ var modulus: int = 7 # TODO (sam): should this be a more "global" thing?
 var floor: int = 0
 var score: int = 0
 var player_spell_count: int = 7
-var player_spells: Dictionary[int, Object] = {}
+var player_spells: Dictionary[int, Spell] = {}
 
 # secret global things?
 var total_floors_cleared_this_run: int = 0
@@ -30,8 +30,19 @@ var current_enemy_moving: int = 0
 
 var game_over = false
 
+var number_keys = [KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9]
+var selected_spell = 0
+
+var stored_number_key_event: int = -1
+
 func _ready() -> void:
 	first_floor()
+
+func _input(event: InputEvent) -> void:
+	if player_turn and not player_moving:
+		if event is InputEventKey and not event.is_echo() and event.is_pressed():
+			if event.physical_keycode in number_keys:
+				stored_number_key_event = event.physical_keycode - 48
 
 func _process(delta: float) -> void:
 	if game_over:
@@ -41,6 +52,17 @@ func _process(delta: float) -> void:
 	
 	if player_turn:
 		if not player_moving:
+			if stored_number_key_event >= 0:
+				print("Looking for spell")
+				if stored_number_key_event in player_spells:
+					print("Casting spell ", stored_number_key_event)
+					player_spells[stored_number_key_event].use(self, grid)
+				elif grid.has_spell(grid.player.grid_position):
+					print("learning spell to ", stored_number_key_event)
+					learn_spell(stored_number_key_event, grid.get_spell(grid.player.grid_position))
+				
+				stored_number_key_event = -1
+			
 			# player move - poll for input, and take action (animate?)
 			if Input.is_action_just_pressed("left"):
 				if grid.player.attack_ok(-1, 0, grid, self):
@@ -88,7 +110,7 @@ func _process(delta: float) -> void:
 				if current_enemy_moving >= len(enemy_priority_order):
 					pass_enemy_turn()
 				else:
-					current_enemy_path = grid.astar(enemy_priority_order[current_enemy_moving].grid_position, grid.player.grid_position)
+					current_enemy_path = grid.a_star(enemy_priority_order[current_enemy_moving].grid_position, grid.player.grid_position)
 					next_spot_on_path_to_move_to = 1
 	
 	# update the UI
@@ -97,6 +119,7 @@ func _process(delta: float) -> void:
 	$UI/Stats/Health/Value.update_text(grid.player.hp)
 	$UI/Stats/Moves/Value.update_text(grid.player.moves)
 	$UI/Stats/Score/Value.update_text(score)
+	
 
 func player_move(x: int, y: int) -> void:
 	player_moving = true
@@ -114,6 +137,15 @@ func player_attack(x: int, y: int) -> void:
 	player_moving = false
 	try_pass_player_turn()
 
+func learn_spell(slot: int, spell: Spell) -> void:
+	grid.remove_spell_from_grid(spell)
+	spell.visible = false
+	
+	$Spells.add_child(spell)
+	player_spells[slot] = spell
+	
+	$UI/Stats/Spells.get_child(slot).add_spell(spell.spell_name(), spell.hover_text())
+
 func enemy_move(enemy: Entity, x: int, y: int) -> void:
 	enemy_moving = true
 	await enemy.move(x, y, grid)
@@ -127,15 +159,15 @@ func enemy_attack(enemy: Entity, x: int, y: int) -> void:
 func spawn_floor_enemies() -> void:
 	# TODO: base this on some smarter scaling, in terms of what can appear where.
 	for i in range(1, floor+2):
-		grid.spawn_enemy(randi_range(1, 4))
+		grid.spawn_enemy(randi_range(1, 3))
 
 func spawn_enemy_on_floor() -> void:
 	# TODO: base this on some smarter scaling, in terms of what can appear where.
-	grid.spawn_enemy(randi_range(1, 4))
+	grid.spawn_enemy(randi_range(1, 3))
 
 func first_floor() -> void:
-	grid.update_grid(7)
-	grid.place_objects()
+	grid.update_grid(modulus)
+	grid.place_first_floor()
 	spawn_floor_enemies()
 
 func next_floor() -> void:
@@ -178,8 +210,7 @@ func try_pass_player_turn() -> void:
 				pass_enemy_turn()
 				return
 			
-		current_enemy_path = grid.astar(enemy_priority_order[current_enemy_moving].grid_position, grid.player.grid_position)
-		print(current_enemy_path)
+		current_enemy_path = grid.a_star(enemy_priority_order[current_enemy_moving].grid_position, grid.player.grid_position)
 		next_spot_on_path_to_move_to = 1
 	else:
 		pass_enemy_turn()

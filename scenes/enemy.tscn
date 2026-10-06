@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://k4ph45ym05k0"]
 
-[ext_resource type="Script" uid="uid://dx0luk4bvl8cc" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Script" uid="uid://dx0luk4bvl8cc" path="res://scripts/enemy.gd" id="1_4gyqm"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7k104"]
 load_path = "res://.godot/imported/enemies.png-54f6dd22fa36905f43103a80b3460952.ctex"

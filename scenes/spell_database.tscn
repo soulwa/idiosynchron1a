@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://i7ga2d2kecbx"]
+
+[ext_resource type="Script" uid="uid://cqpkj1dg0xw0b" path="res://scripts/spell_database.gd" id="1_keelg"]
+
+[node name="SpellDatabase" type="Node" unique_id=1534786896]
+script = ExtResource("1_keelg")

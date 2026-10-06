@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://be7ocbod87kb7"
-path="res://.godot/imported/creep2.ttf-b055955fac1e30844f2eb62860128a6f.fontdata"
+uid="uid://c2kxaqj5b8u40"
+path="res://.godot/imported/m3x6.ttf-21dd1b2d0cb60e4b8c1f80f8ebd64585.fontdata"
 
 [deps]
 
-source_file="res://creep2.ttf"
-dest_files=["res://.godot/imported/creep2.ttf-b055955fac1e30844f2eb62860128a6f.fontdata"]
+source_file="res://assets/fonts/m3x6.ttf"
+dest_files=["res://.godot/imported/m3x6.ttf-21dd1b2d0cb60e4b8c1f80f8ebd64585.fontdata"]
 
 [params]
 

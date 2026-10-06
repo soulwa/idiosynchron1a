@@ -15,6 +15,10 @@ run/main_scene="uid://bu4e4tevp5ddq"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SpellDatabase="*uid://i7ga2d2kecbx"
+
 [display]
 
 window/size/viewport_width=112

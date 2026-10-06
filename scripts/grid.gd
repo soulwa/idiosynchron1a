@@ -21,7 +21,7 @@ func _ready() -> void:
 func update_grid(modulus: int) -> void:
 	# col of numbers
 	for i in range(0, modulus):
-		var num: RichTextLabel = preload("res://grid_number.tscn").instantiate()
+		var num: RichTextLabel = preload("res://scenes/grid_number.tscn").instantiate()
 		num.text = str(i)
 		
 		$GridNumbers.add_child(num)
@@ -29,7 +29,7 @@ func update_grid(modulus: int) -> void:
 	
 	# row of numbers
 	for i in range(0, modulus):
-		var num: RichTextLabel = preload("res://grid_number.tscn").instantiate()
+		var num: RichTextLabel = preload("res://scenes/grid_number.tscn").instantiate()
 		num.text = str(i)
 		
 		$GridNumbers.add_child(num)
@@ -51,37 +51,51 @@ func update_grid(modulus: int) -> void:
 			$Tiles.add_child(sprite)
 			sprite.position = $TopLeftTiles.position + Vector2.RIGHT * 7 * row + Vector2.DOWN * 7 * col
 	
-	gridsize = 7
+	gridsize = modulus
 
-func place_objects() -> void:
+func place_first_floor() -> void:
 	var corners = [Vector2i(0, 0), Vector2i(0, 6), Vector2i(6, 0), Vector2i(6, 6)]
 	var player_corner = corners.pick_random()
 	player.place_immediate(player_corner.x, player_corner.y, self)
 	
 	# TODO (sam): if we have walls maybe change the way this works.
-	exit = preload("res://exit.tscn").instantiate()
+	exit = preload("res://scenes/exit.tscn").instantiate()
 	$Entities.add_child(exit)
 	$Entities.move_child(exit, 0)
 	var exit_corner = abs(Vector2i(6, 6) - player_corner)
 	exit.place_immediate(exit_corner.x, exit_corner.y, self)
+	
+	for i in range(0, 2):
+		var spell: Entity = preload("res://scenes/spell.tscn").instantiate()
+		$Entities/Spells.add_child(spell)
+		
+		var pos = pick_random_tile_unoccupied()
+		spell.place_immediate(pos.x, pos.y, self)
 	
 func place_next_floor() -> void:
 	exit.queue_free()
 	exit.visible = false
 	exit.place_immediate(-1000, -1000, self)
 	
-	exit = preload("res://exit.tscn").instantiate()
+	exit = preload("res://scenes/exit.tscn").instantiate()
 	$Entities.add_child(exit)
 	$Entities.move_child(exit, 0)
 	var exit_corner = abs(Vector2i(6, 6) - player.grid_position)
 	exit.place_immediate(exit_corner.x, exit_corner.y, self)
+	
+	for i in range(0, 2):
+		var spell: Entity = preload("res://scenes/spell.tscn").instantiate()
+		$Entities/Spells.add_child(spell)
+		
+		var pos = pick_random_tile_unoccupied()
+		spell.place_immediate(pos.x, pos.y, self)
 
 func spawn_enemy(enemy_number: int) -> void:
 	# 1. find an available tile (away from player?)
 	var spawnpos := pick_random_tile_unoccupied()
 	# 2. TODO place a little spawn marker there
 	# 3. spawn marker will manage itself? or we tick it in the game.
-	var enemy: Enemy = preload("res://enemy.tscn").instantiate()
+	var enemy: Enemy = preload("res://scenes/enemy.tscn").instantiate()
 	enemy.enemy_number = enemy_number
 	$Entities/Enemies.add_child(enemy)
 	enemy.place_immediate(spawnpos.x, spawnpos.y, self)
@@ -125,13 +139,23 @@ func get_entity(coords: Vector2i) -> Entity:
 			return ent
 	return null
 
+func get_spell(coords: Vector2i) -> Spell:
+	for spell: Spell in $Entities/Spells.get_children():
+		if spell.grid_position == coords:
+			return spell
+	return null
+
+func remove_spell_from_grid(spell: Spell) -> void:
+	$Entities/Spells.remove_child(spell) 
+
 func tile_neighbors_ortho(tile: Vector2i) -> Array[Vector2i]:
 	return [tile + Vector2i.LEFT, tile + Vector2i.RIGHT, tile + Vector2i.UP, tile + Vector2i.DOWN]
 
 func tile_neighbors_ortho_inbounds(tile: Vector2i) -> Array[Vector2i]:
 	return tile_neighbors_ortho(tile).filter(inbounds)
-	
-func astar(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+
+# FIXME: handle partial paths.
+func a_star(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	# referred to https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
 	var frontier := PriorityQueue.new()
 	var path := []
@@ -153,14 +177,12 @@ func astar(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		steps += 1
 		
 		var cur = frontier.pop()
-		print(frontier._costs)
 		if cur == to:
 			break
 		
 		var neighbors := tile_neighbors_ortho_inbounds(cur)
 		neighbors = neighbors.filter(func(n): return not has_enemy(n))
 		neighbors.shuffle()
-		print(cur, " ", neighbors)
 		
 		for next in neighbors:
 			var new_cost: float = cost_so_far[cur] + 1 # TODO (sam): this is where walls would come into play?
@@ -179,13 +201,17 @@ func astar(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		node = came_from[node]
 	path.push_front(node)
 	
-	# assert(len(path) - 1 == heuristic.call(from, to))
-	
 	return path
 
 
 func inbounds(coords: Vector2i) -> bool:
 	return coords.x >= 0 and coords.y >= 0 and coords.x < (gridsize) and coords.y < (gridsize)
+
+func has_spell(coords: Vector2i) -> bool:
+	for spell: Spell in $Entities/Spells.get_children():
+		if spell.grid_position == coords:
+			return true
+	return false
 
 func has_player(coords: Vector2i) -> bool:
 	return coords == player.grid_position

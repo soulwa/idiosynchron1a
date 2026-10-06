@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c020dk572vwrs"
-path="res://.godot/imported/spawnmarker.png-0b1eb8a3b404a3b38fee29a5cf0742b6.ctex"
+path="res://.godot/imported/spawnmarker.png-9848e20de981dc041933414983565f7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawnmarker.png"
-dest_files=["res://.godot/imported/spawnmarker.png-0b1eb8a3b404a3b38fee29a5cf0742b6.ctex"]
+source_file="res://assets/textures/spawnmarker.png"
+dest_files=["res://.godot/imported/spawnmarker.png-9848e20de981dc041933414983565f7d.ctex"]
 
 [params]
 
