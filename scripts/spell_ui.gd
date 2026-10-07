@@ -20,10 +20,21 @@ func add_spell(nom: String, hint: String) -> void:
 	spell_hint = hint
 	active = true
 	
+	white_spell()
+
+func white_spell() -> void:
 	$SpellName.clear()
 	$SpellName.text = ""
 	
 	$SpellName.push_color(Color.WHITE)
+	$SpellName.add_text(spell_name)
+	$SpellName.pop()
+
+func grey_spell() -> void:
+	$SpellName.clear()
+	$SpellName.text = ""
+	
+	$SpellName.push_color(Color("7a7a7a"))
 	$SpellName.add_text(spell_name)
 	$SpellName.pop()
 

@@ -1,33 +1,34 @@
-[gd_scene format=3 uid="uid://bu4e4tevp5ddq"]
+[gd_scene format=3 uid="uid://cikvt7b4r3i8n"]
 
-[ext_resource type="Script" uid="uid://bnwijij557iyv" path="res://scripts/run.gd" id="1_7r4gi"]
-[ext_resource type="Script" uid="uid://ds2tdn857ed2w" path="res://scripts/grid.gd" id="2_w7kh3"]
-[ext_resource type="Texture2D" uid="uid://c6md4j46jlpyl" path="res://assets/textures/tiles.png" id="3_e3hyu"]
-[ext_resource type="Script" uid="uid://bpujqwvsvg7xy" path="res://scripts/player.gd" id="4_q5onr"]
-[ext_resource type="Texture2D" uid="uid://c2awv65o1psti" path="res://assets/textures/player.png" id="5_jhx03"]
-[ext_resource type="PackedScene" uid="uid://dpdw85h36mo24" path="res://scenes/spell_ui.tscn" id="6_o8fc1"]
-[ext_resource type="Theme" uid="uid://cby6dkwpffv60" path="res://resources/eng_font.tres" id="7_xo05s"]
-[ext_resource type="Script" uid="uid://5rxr22re30k8" path="res://scripts/color_text.gd" id="8_dss4m"]
-[ext_resource type="Script" uid="uid://dw7f0teaesrfn" path="res://scripts/spell_help.gd" id="9_7t5mc"]
+[ext_resource type="Script" uid="uid://bnwijij557iyv" path="res://scripts/run.gd" id="1_mo4um"]
+[ext_resource type="Script" uid="uid://ds2tdn857ed2w" path="res://scripts/grid.gd" id="2_xs27g"]
+[ext_resource type="Texture2D" uid="uid://c6md4j46jlpyl" path="res://assets/textures/tiles.png" id="3_y3gr5"]
+[ext_resource type="Script" uid="uid://bpujqwvsvg7xy" path="res://scripts/player.gd" id="4_1qpq0"]
+[ext_resource type="Texture2D" uid="uid://c2awv65o1psti" path="res://assets/textures/player.png" id="5_0n8qe"]
+[ext_resource type="PackedScene" uid="uid://dpdw85h36mo24" path="res://scenes/spell_ui.tscn" id="6_7ltbg"]
+[ext_resource type="Theme" uid="uid://cby6dkwpffv60" path="res://resources/eng_font.tres" id="7_t85ds"]
+[ext_resource type="Script" uid="uid://5rxr22re30k8" path="res://scripts/color_text.gd" id="8_00do5"]
+[ext_resource type="Script" uid="uid://dw7f0teaesrfn" path="res://scripts/spell_help.gd" id="9_s38mh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwbse"]
-atlas = ExtResource("3_e3hyu")
+atlas = ExtResource("3_y3gr5")
 region = Rect2(0, 0, 7, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkg7o"]
-atlas = ExtResource("3_e3hyu")
+atlas = ExtResource("3_y3gr5")
 region = Rect2(7, 0, 7, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gbfbk"]
-atlas = ExtResource("3_e3hyu")
+atlas = ExtResource("3_y3gr5")
 region = Rect2(14, 0, 7, 7)
 
 [node name="World" type="Node2D" unique_id=464993906]
-script = ExtResource("1_7r4gi")
+script = ExtResource("1_mo4um")
+scenario_num = 2
 
 [node name="Grid" type="Node2D" parent="." unique_id=1679135076]
 position = Vector2(7, 7)
-script = ExtResource("2_w7kh3")
+script = ExtResource("2_xs27g")
 zero_texture = SubResource("AtlasTexture_dwbse")
 odd_texture = SubResource("AtlasTexture_pkg7o")
 even_texture = SubResource("AtlasTexture_gbfbk")
@@ -75,10 +76,10 @@ color = Color(0, 0, 0, 0.39215687)
 
 [node name="Player" type="Node2D" parent="Grid/Entities" unique_id=24108697]
 position = Vector2(17.5, 17.5)
-script = ExtResource("4_q5onr")
+script = ExtResource("4_1qpq0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Grid/Entities/Player" unique_id=1412249075]
-texture = ExtResource("5_jhx03")
+texture = ExtResource("5_0n8qe")
 
 [node name="Spells" type="Node2D" parent="." unique_id=480870143]
 
@@ -111,7 +112,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Spells" type="Control" parent="UI/Stats" unique_id=1229451003]
 anchors_preset = 0
 
-[node name="Spell0" parent="UI/Stats/Spells" unique_id=1117293171 instance=ExtResource("6_o8fc1")]
+[node name="Spell0" parent="UI/Stats/Spells" unique_id=1117293171 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -125,7 +126,7 @@ offset_bottom = 37.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Spell1" parent="UI/Stats/Spells" unique_id=2142383480 instance=ExtResource("6_o8fc1")]
+[node name="Spell1" parent="UI/Stats/Spells" unique_id=2142383480 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -140,7 +141,7 @@ grow_horizontal = 1
 grow_vertical = 1
 number = 1
 
-[node name="Spell2" parent="UI/Stats/Spells" unique_id=1742101733 instance=ExtResource("6_o8fc1")]
+[node name="Spell2" parent="UI/Stats/Spells" unique_id=1742101733 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -155,7 +156,7 @@ grow_horizontal = 1
 grow_vertical = 1
 number = 2
 
-[node name="Spell3" parent="UI/Stats/Spells" unique_id=2146318823 instance=ExtResource("6_o8fc1")]
+[node name="Spell3" parent="UI/Stats/Spells" unique_id=2146318823 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -170,7 +171,7 @@ grow_horizontal = 1
 grow_vertical = 1
 number = 3
 
-[node name="Spell4" parent="UI/Stats/Spells" unique_id=18370599 instance=ExtResource("6_o8fc1")]
+[node name="Spell4" parent="UI/Stats/Spells" unique_id=18370599 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -185,7 +186,7 @@ grow_horizontal = 1
 grow_vertical = 1
 number = 4
 
-[node name="Spell5" parent="UI/Stats/Spells" unique_id=130279917 instance=ExtResource("6_o8fc1")]
+[node name="Spell5" parent="UI/Stats/Spells" unique_id=130279917 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -200,7 +201,7 @@ grow_horizontal = 1
 grow_vertical = 1
 number = 5
 
-[node name="Spell6" parent="UI/Stats/Spells" unique_id=1538327837 instance=ExtResource("6_o8fc1")]
+[node name="Spell6" parent="UI/Stats/Spells" unique_id=1538327837 instance=ExtResource("6_7ltbg")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -224,7 +225,7 @@ offset_left = 21.0
 offset_top = -4.0
 offset_right = 40.0
 offset_bottom = 9.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "MOD"
 fit_content = true
 scroll_active = false
@@ -235,11 +236,11 @@ layout_mode = 0
 offset_left = 14.0
 offset_right = 21.0
 offset_bottom = 13.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "7"
 fit_content = true
 scroll_active = false
-script = ExtResource("8_dss4m")
+script = ExtResource("8_00do5")
 
 [node name="Floor" type="RichTextLabel" parent="UI/Stats" unique_id=2030089895]
 layout_mode = 0
@@ -247,7 +248,7 @@ offset_left = 12.0
 offset_top = 2.0
 offset_right = 50.0
 offset_bottom = 15.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "floor"
 fit_content = true
 scroll_active = false
@@ -265,11 +266,11 @@ offset_right = 27.0
 offset_bottom = 6.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "1"
 fit_content = true
 scroll_active = false
-script = ExtResource("8_dss4m")
+script = ExtResource("8_00do5")
 
 [node name="Health" type="RichTextLabel" parent="UI/Stats" unique_id=2101951142]
 layout_mode = 1
@@ -280,7 +281,7 @@ offset_left = 23.0
 offset_top = 3.0
 offset_right = 65.0
 offset_bottom = 16.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "hp"
 fit_content = true
 scroll_active = false
@@ -291,11 +292,11 @@ layout_mode = 0
 offset_left = 12.0
 offset_right = 19.0
 offset_bottom = 13.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "6"
 fit_content = true
 scroll_active = false
-script = ExtResource("8_dss4m")
+script = ExtResource("8_00do5")
 
 [node name="Moves" type="RichTextLabel" parent="UI/Stats" unique_id=322111688]
 layout_mode = 1
@@ -306,7 +307,7 @@ offset_left = 9.0
 offset_top = 11.0
 offset_right = 47.0
 offset_bottom = 24.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "moves"
 fit_content = true
 scroll_active = false
@@ -325,11 +326,11 @@ offset_right = 30.0
 offset_bottom = 6.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "1"
 fit_content = true
 scroll_active = false
-script = ExtResource("8_dss4m")
+script = ExtResource("8_00do5")
 
 [node name="Score" type="RichTextLabel" parent="UI/Stats" unique_id=172807624]
 layout_mode = 1
@@ -341,7 +342,7 @@ offset_left = 9.0
 offset_top = 11.0
 offset_right = 47.0
 offset_bottom = 24.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "score"
 fit_content = true
 scroll_active = false
@@ -360,11 +361,11 @@ offset_right = 17.0
 offset_bottom = 4.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "0"
 scroll_active = false
 horizontal_alignment = 2
-script = ExtResource("8_dss4m")
+script = ExtResource("8_00do5")
 
 [node name="GameOver" type="Control" parent="UI" unique_id=643699453]
 visible = false
@@ -378,7 +379,7 @@ offset_left = 13.0
 offset_top = 8.0
 offset_right = 65.0
 offset_bottom = 62.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "game over
 
 press enter to try again"
@@ -391,7 +392,7 @@ visible = false
 anchors_preset = 0
 offset_right = 70.0
 offset_bottom = 49.0
-script = ExtResource("9_7t5mc")
+script = ExtResource("9_s38mh")
 
 [node name="ColorRect" type="ColorRect" parent="UI/SpellHelp" unique_id=1024081055]
 layout_mode = 0
@@ -405,7 +406,7 @@ offset_left = 1.0
 offset_top = -4.0
 offset_right = 44.0
 offset_bottom = 7.0
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 text = "inc"
 scroll_active = false
 
@@ -421,7 +422,7 @@ offset_right = 1.0
 offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_xo05s")
+theme = ExtResource("7_t85ds")
 theme_override_constants/line_separation = -3
 theme_override_font_sizes/normal_font_size = 16
 text = "+1 immediate to [enemy]"

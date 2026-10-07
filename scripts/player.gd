@@ -1,5 +1,7 @@
 class_name Player extends Entity
 
+var moves_to_restore = 1
+
 func _ready() -> void:
 	super._ready()
 	grid_position = Vector2.ONE
@@ -8,7 +10,7 @@ func _process(delta: float) -> void:
 	super._process(delta)
 
 func reset_moves() -> void:
-	moves = 1
+	moves = moves_to_restore
 
 func move_ok(dx: int, dy: int, grid: Grid, run: Run) -> bool:
 	var coords = grid_position + Vector2i(dx, dy)

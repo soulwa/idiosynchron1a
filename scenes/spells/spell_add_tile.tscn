@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://xljtmh0lmqs1"]
+
+[ext_resource type="Script" uid="uid://bwk4p6k414wpi" path="res://scenes/spells/spell_add_tile.gd" id="1_y5ect"]
+[ext_resource type="Texture2D" uid="uid://dd0x0fy3c3j51" path="res://assets/textures/spellrune.png" id="2_ptawt"]
+
+[node name="Spell" type="Node2D" unique_id=773266266]
+script = ExtResource("1_y5ect")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1644777191]
+texture = ExtResource("2_ptawt")

@@ -17,8 +17,36 @@ var exit: Entity
 
 func _ready() -> void:
 	pass
-	
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("product"):
+		$TileSums.hide()
+		$TileProducts.show()
+	elif event.is_action_released("product"):
+		$TileProducts.hide()
+	elif event.is_action_pressed("sum"):
+		$TileProducts.hide()
+		$TileSums.show()
+	elif event.is_action_released("sum"):
+		$TileSums.hide()
+
+
 func update_grid(modulus: int) -> void:
+	for child in $GridNumbers.get_children():
+		child.visible = false
+		child.queue_free()
+	for child in $Tiles.get_children():
+		child.visible = false
+		child.queue_free()
+	for child in $TileProducts.get_children():
+		if child is not ColorRect:
+			child.visible = false
+			child.queue_free()
+	for child in $TileSums.get_children():
+		if child is not ColorRect:
+			child.visible = false
+			child.queue_free()
+	
 	# col of numbers
 	for i in range(0, modulus):
 		var num: RichTextLabel = preload("res://scenes/grid_number.tscn").instantiate()
@@ -50,8 +78,25 @@ func update_grid(modulus: int) -> void:
 				sprite.texture = odd_texture
 			$Tiles.add_child(sprite)
 			sprite.position = $TopLeftTiles.position + Vector2.RIGHT * 7 * row + Vector2.DOWN * 7 * col
+			
+			var prod: RichTextLabel = preload("res://scenes/grid_number.tscn").instantiate()
+			prod.text = str((row * col) % modulus)
+			$TileProducts.add_child(prod)
+			prod.position = $TopLeftTiles.position + Vector2.RIGHT * 7 * row + Vector2.DOWN * 7 * col + Vector2.ONE + Vector2.RIGHT
+			
+			var sum: RichTextLabel = preload("res://scenes/grid_number.tscn").instantiate()
+			sum.text = str((row + col) % modulus)
+			$TileSums.add_child(sum)
+			sum.position = $TopLeftTiles.position + Vector2.RIGHT * 7 * row + Vector2.DOWN * 7 * col + Vector2.ONE+ Vector2.RIGHT
+	
 	
 	gridsize = modulus
+
+func clamp_stuff(modulus: int) -> void:
+	update_grid(modulus)
+	for enemy in enemies:
+		enemy.change_enemy_number(enemy.enemy_number % modulus)
+	player.hp %= modulus
 
 func place_first_floor() -> void:
 	var corners = [Vector2i(0, 0), Vector2i(0, 6), Vector2i(6, 0), Vector2i(6, 6)]
@@ -66,7 +111,7 @@ func place_first_floor() -> void:
 	exit.place_immediate(exit_corner.x, exit_corner.y, self)
 	
 	for i in range(0, 2):
-		var spell: Entity = preload("res://scenes/spell.tscn").instantiate()
+		var spell: Entity = SpellDatabase.get_random_spell()
 		$Entities/Spells.add_child(spell)
 		
 		var pos = pick_random_tile_unoccupied()
@@ -83,8 +128,13 @@ func place_next_floor() -> void:
 	var exit_corner = abs(Vector2i(6, 6) - player.grid_position)
 	exit.place_immediate(exit_corner.x, exit_corner.y, self)
 	
+	for spell in $Entities/Spells.get_children():
+		spell.visible = false
+		spell.queue_free()
+		spell.place_immediate(-1000, -1000, self)
+	
 	for i in range(0, 2):
-		var spell: Entity = preload("res://scenes/spell.tscn").instantiate()
+		var spell: Entity = SpellDatabase.get_random_spell()
 		$Entities/Spells.add_child(spell)
 		
 		var pos = pick_random_tile_unoccupied()
@@ -102,6 +152,16 @@ func spawn_enemy(enemy_number: int) -> void:
 	
 	enemies.append(enemy)
 
+func spawn_enemy_at_pos(enemy_number: int, x: int, y: int) -> void:
+	# 2. TODO place a little spawn marker there
+	# 3. spawn marker will manage itself? or we tick it in the game.
+	var enemy: Enemy = preload("res://scenes/enemy.tscn").instantiate()
+	enemy.enemy_number = enemy_number
+	$Entities/Enemies.add_child(enemy)
+	enemy.place_immediate(x, y, self)
+	
+	enemies.append(enemy)
+
 func remove_enemies() -> void:
 	for enemy in enemies:
 		enemy.queue_free()
@@ -116,6 +176,18 @@ func pick_random_tile_unoccupied() -> Vector2i:
 	while has_wall(coords) or has_player(coords) or has_enemy(coords):
 		coords = pick_random_tile()
 	return coords
+
+func pick_random_unoccupied_tile_with_distance_from_another(other: Vector2i, dist: int) -> Vector2i:
+	for i in range(10):
+		var x := randi_range(0, 3)
+		var y := 4 - x
+		x *= 1 if randf() > 0.5 else -1
+		y *= 1 if randf() > 0.5 else -1
+		var candidate := other + Vector2i(x, y)
+		if not has_wall(candidate) and not has_player(candidate) and not has_enemy(candidate):
+			return candidate
+	
+	return pick_random_tile_unoccupied()
 
 func tiles_that_have_sum_n(n: int, m: int) -> Array[Vector2i]:
 	var sums: Array[Vector2i] = []
@@ -139,6 +211,11 @@ func get_entity(coords: Vector2i) -> Entity:
 			return ent
 	return null
 
+func get_player(coords: Vector2i) -> Entity:
+	if player.grid_position != coords:
+		return null
+	return player
+
 func get_spell(coords: Vector2i) -> Spell:
 	for spell: Spell in $Entities/Spells.get_children():
 		if spell.grid_position == coords:
@@ -159,9 +236,6 @@ func a_star(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	# referred to https://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
 	var frontier := PriorityQueue.new()
 	var path := []
-	
-	if not inbounds(from):
-		assert(false, "need this lol")
 	
 	# manhattan dist heuristic
 	var heuristic := func(a: Vector2i, b: Vector2i) -> int: return abs(a.x - b.x) + abs(a.y - b.y)
@@ -194,8 +268,11 @@ func a_star(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		
 	print("a-star took ", (Time.get_ticks_usec() - start) / 1000.0, " ms")
 	
-	# failed to find a path in time, just do something, idk.
+	# FIXME: if we failed to find a path not sure what to do
 	var node := to
+	if to not in came_from:
+		node = came_from.keys()[-1]
+		
 	while node != from:
 		path.push_front(node)
 		node = came_from[node]
@@ -222,7 +299,19 @@ func has_exit(coords: Vector2i) -> bool:
 func has_wall(coords: Vector2i) -> bool:
 	return false
 
+func get_enemy(coords: Vector2i) -> Enemy:
+	for enemy: Enemy in $Entities/Enemies.get_children():
+		if enemy.grid_position == coords and enemy.enemy_number != 0:
+			return enemy
+	return null
+
 func has_enemy(coords: Vector2i) -> bool:
+	for enemy: Enemy in $Entities/Enemies.get_children():
+		if enemy.grid_position == coords and enemy.enemy_number != 0:
+			return true
+	return false
+	
+func has_enemy_including_zero(coords: Vector2i) -> bool:
 	for enemy: Enemy in $Entities/Enemies.get_children():
 		if enemy.grid_position == coords:
 			return true

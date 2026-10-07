@@ -37,10 +37,9 @@ func move(dx: int, dy: int, grid: Grid, animate: bool = true) -> Signal:
 	else:
 		return get_tree().create_timer(0.01).timeout
 
-func bump_attack(dx: int, dy: int, grid: Grid, modulus: int, animate: bool = true) -> Signal:
+func bump_attack(dx: int, dy: int, grid: Grid, ent: Entity, modulus: int, animate: bool = true) -> Signal:
 	var offs = Vector2i(dx, dy)
-	var entity_at_position: Entity = grid.get_entity(grid_position + offs)
-	entity_at_position.take_damage(attack_power, modulus)
+	ent.take_damage(attack_power, modulus)
 	moves -= 1
 	if animate:
 		return animate_bump_in_direction(offs, 2.0, 0.3)

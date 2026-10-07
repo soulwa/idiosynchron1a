@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://k4ph45ym05k0"]
 
 [ext_resource type="Script" uid="uid://dx0luk4bvl8cc" path="res://scripts/enemy.gd" id="1_4gyqm"]
+[ext_resource type="FontFile" uid="uid://3spaa63irfhe" path="res://assets/fonts/pico-8.ttf" id="2_md0e3"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7k104"]
 load_path = "res://.godot/imported/enemies.png-54f6dd22fa36905f43103a80b3460952.ctex"
@@ -15,3 +16,21 @@ script = ExtResource("1_4gyqm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=306780943]
 texture = SubResource("AtlasTexture_4gyqm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=925272990]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 10.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_md0e3")
+theme_override_font_sizes/normal_font_size = 5
+text = "10"
+scroll_active = false

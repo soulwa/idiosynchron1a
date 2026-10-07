@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://doj5ln53066ou"]
+
+[ext_resource type="Script" uid="uid://cgvx0bmu4xesa" path="res://scenes/spells/spell_incmod.gd" id="1_t2621"]
+[ext_resource type="Texture2D" uid="uid://dd0x0fy3c3j51" path="res://assets/textures/spellrune.png" id="2_txte0"]
+
+[node name="SpellIncrementModulus" type="Node2D" unique_id=1808797670]
+script = ExtResource("1_t2621")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1805152033]
+texture = ExtResource("2_txte0")
